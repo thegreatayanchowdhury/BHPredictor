@@ -44,6 +44,44 @@ if st.button("Predict"):
     st.success(f"💰 Predicted Median Home Value: **${predicted_price:.2f}k**")
 
 st.markdown("---")
+st.header("📁 Batch Prediction")
+
+uploaded_file = st.file_uploader("Upload a CSV file with 13 features", type=["csv"])
+
+if uploaded_file:
+    try:
+        batch_df = pd.read_csv(uploaded_file)
+
+        # Check if all required columns are present
+        required_columns = [
+            'CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE',
+            'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'
+        ]
+        missing = [col for col in required_columns if col not in batch_df.columns]
+
+        if missing:
+            st.error(f"❌ Missing columns: {', '.join(missing)}")
+        else:
+            # Predict
+            predictions = model.predict(batch_df[required_columns])
+            batch_df['Predicted_MEDV'] = predictions
+
+            st.success("✅ Predictions completed!")
+            st.dataframe(batch_df.head(10))
+
+            # Provide download link
+            csv = batch_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Download Results as CSV",
+                data=csv,
+                file_name="batch_predictions.csv",
+                mime="text/csv"
+            )
+    except Exception as e:
+        st.error(f"⚠️ Error reading file: {e}")
+
+
+st.markdown("---")
 st.markdown(
     "<small>📘 Model trained on the [Boston Housing Dataset](https://github.com/rupakc/UCI-Data-Analysis/tree/master/Boston%20Housing%20Dataset/Boston%20Housing) "
     "originally published on **July 7, 1993**, maintained by Carnegie Mellon University StatLib.</small>",
