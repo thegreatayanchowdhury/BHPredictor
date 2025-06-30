@@ -80,6 +80,8 @@ if uploaded_file:
     except Exception as e:
         st.error(f"⚠️ Error reading file: {e}")
 
+with open("example_input.csv", "rb") as f:
+    st.download_button("📄 Download Input Template", f, file_name="example_input.csv")
 
 st.markdown("---")
 st.markdown(
