@@ -32,7 +32,7 @@ The dataset contains 506 samples with the following features:
 
 ## 🧠 ML Model
 
-- **Algorithm:** Linear Regression / Decision Tree / any other you used
+- **Algorithm:** RandomForestRegressor
 - **Target:** `MEDV` (Median home value)
 - **Libraries:** `scikit-learn`, `pandas`, `streamlit`, `joblib`
 
@@ -43,6 +43,8 @@ The dataset contains 506 samples with the following features:
 - scikit-learn
 - joblib
 - pandas
+- numpy
+- matplotlib
 
 ## 🛠️ How to Run Locally
 
